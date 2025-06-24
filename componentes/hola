@@ -1,0 +1,115 @@
+<thead>
+                                 <th>CODIGO</th>
+                                 <th>PESO</th>
+                                 <th>ALTURA</th>
+                                 <th>TENSION ARTERIAL</th>
+                                 <th>PULSO</th>
+                                 <th>TEMPERATURA</th>
+                                 <th>PO2</th>
+                                 <th>FECHA</th>
+                                 <th>HORA</th>
+                                 <th>PRECIO</th>
+                                 <th>Acciones</th>
+                             </thead>
+                             <tbody>
+                                 <?php while ($row_pacientes = $pacientes->fetch_assoc()) {  ?>
+
+                                     <tr>
+                                         <td> <?= $row_pacientes['paciente_cod']; ?></td>
+                                         <td> <?= $row_pacientes['peso']; ?></td>
+                                         <td> <?= $row_pacientes['altura']; ?></td>
+                                         <td> <?= $row_pacientes['tension_arterial']; ?></td>
+                                         <td> <?= $row_pacientes['pulso']; ?></td>
+                                         <td> <?= $row_pacientes['temperatura']; ?></td>
+
+                                         <td> <?= $row_pacientes['PO2']; ?></td>
+                                         <td> <?= $row_pacientes['fecha']; ?></td>
+                                         <td> <?= $row_pacientes['hora']; ?></td>
+                                         <td> <?= $row_pacientes['precio']; ?></td>
+
+                                         <td>
+
+                                             <a href="../DOCTOR/editar_consultas.php?id=<?= $row_pacientes['id'];  ?>  & paciente_id=<?= $row_pacientes['paciente_id']; ?>" class="btn btn-sm btn-primary">Editar</a>
+                                             <a href="../DOCTOR/analisis.php?id_consulta=<?= $row_pacientes['id'];  ?> & codigo=<?= $row_pacientes['paciente_cod'];  ?> &  id_paciente=<?= $row_pacientes['paciente_id']; ?> & fecha=<?= $row_pacientes['fecha']; ?>" class="btn btn-sm btn-warning btn-sm">PRUEBAS</a>
+                                             <a href="../DOCTOR/registrar_receta.php?id=<?= $row_pacientes['id'];  ?> & codigo=<?= $row_pacientes['paciente_cod']; ?> & paciente_id=<?= $row_pacientes['paciente_id']; ?> & fecha=<?= $row_pacientes['fecha']; ?>" class="btn btn-sm btn-success btn-sm">RECETAS</a>
+
+
+                                         </td>
+                                     </tr>
+
+
+                                 <?php } ?>
+                             </tbody>
+                             <tfoot>
+                                 <tr>
+                                     <th>CODIGO</th>
+                                     <th>PESO</th>
+                                     <th>ALTURA</th>
+                                     <th>TENSION ARTERIAL</th>
+                                     <th>PULSO</th>
+                                     <th>TEMPERATURA</th>
+                                     <th>PO2</th>
+                                     <th>FECHA</th>
+                                     <th>HORA</th>
+                                     <th>PRECIO</th>
+                                     <th>Acciones</th>
+                                 </tr>
+                             </tfoot>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               <script>
+
+$(document).ready(function () {
+    var table = $('#example').DataTable({
+        destroy: true,
+        ajax: {
+            url: 'datos_consultas.php',
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: "paciente_cod" },
+            { data: "peso" },
+            { data: "altura" },
+            { data: "tension_arterial" },
+            { data: "pulso" },
+            { data: "temperatura" },
+            { data: "PO2" },
+            { data: "fecha" },
+            { data: "hora" },
+            { data: "precio" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <a href="../DOCTOR/editar_consultas.php?id=${row.id}&paciente_id=${row.paciente_id}" class="btn btn-sm btn-primary">Editar</a>
+                        <a href="../DOCTOR/analisis.php?id_consulta=${row.id}&codigo=${row.paciente_cod}&id_paciente=${row.paciente_id}&fecha=${row.fecha}" class="btn btn-sm btn-warning">PRUEBAS</a>
+                        <a href="../DOCTOR/registrar_receta.php?id=${row.id}&codigo=${row.paciente_cod}&paciente_id=${row.paciente_id}&fecha=${row.fecha}" class="btn btn-sm btn-success">RECETAS</a>
+                    `;
+                }
+            }
+        ]
+    });
+
+    // Forzar recarga al escribir en el input de búsqueda
+    $('#example_filter input').on('input', function () {
+        table.search(this.value).draw();
+    });
+});
+
+</script>
