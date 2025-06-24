@@ -171,7 +171,11 @@
 
 
 
+
 <?php
+
+
+
   // menu
    include '../componentes/footer.php';
   ?>
