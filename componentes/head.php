@@ -227,5 +227,97 @@ $numero_pacientesf=mysqli_num_rows($resultado_pacientesf);
   }
 </style>
 
+<style>
+    .bg-gradient-info {
+        background: linear-gradient(45deg, #17a2b8, #138496); /* Degradado azul-cian */
+    }
+    .modal-title i {
+        color: rgba(255, 255, 255, 0.8);
+    }
+    .btn-close-white {
+        filter: invert(1); /* Hace que el icono de cerrar sea blanco */
+    }
+    .detail-item {
+        margin-bottom: 0.75rem;
+    }
+    .detail-item strong {
+        color: #007bff; /* Color azul para las etiquetas */
+    }
+    .detail-item i {
+        color: #6c757d; /* Color gris para los iconos */
+        width: 25px; /* Ancho fijo para alinear iconos */
+        text-align: center;
+    }
+</style>
+
+
+
+<style>
+    /* Estilos adicionales para un toque moderno y profesional */
+    .modal-header.bg-primary {
+        background-color: var(--bs-primary) !important;
+        background-image: linear-gradient(to right, var(--bs-primary), var(--bs-primary-rgb), rgba(var(--bs-primary-rgb), 0.8)) !important;
+    }
+
+    .modal-content {
+        border-radius: 0.75rem !important; /* Bordes más suaves */
+        overflow: hidden;
+    }
+
+    .btn-close-white {
+        filter: invert(1); /* Icono de cerrar blanco */
+        opacity: 0.8;
+    }
+    .btn-close-white:hover {
+        opacity: 1;
+    }
+
+    /* Datos del paciente/consulta */
+    .bg-light-subtle {
+        background-color: var(--bs-tertiary-bg) !important; /* Un gris muy claro de Bootstrap */
+    }
+
+    .form-switch .form-check-input {
+        transform: scale(1.2); /* Interruptor un poco más grande */
+        cursor: pointer;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: var(--bs-gray-700);
+    }
+
+    .input-group-text {
+        background-color: var(--bs-gray-200);
+        border-right: none;
+        color: var(--bs-gray-600);
+    }
+
+    .form-control:focus {
+        border-color: var(--bs-primary);
+        box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    }
+
+    textarea {
+        resize: vertical; /* Permitir redimensionar solo verticalmente */
+    }
+
+    /* Iconos dentro de labels para secciones */
+    .form-label i {
+        font-size: 1.1rem;
+        vertical-align: middle;
+    }
+
+    /* Opcional: animaciones suaves para los campos ocultos */
+    .d-none.fade-in {
+        animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
 </head>
 

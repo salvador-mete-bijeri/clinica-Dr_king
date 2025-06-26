@@ -18,490 +18,205 @@ if ($id_numero > 0) {
 
 <div class="container-fluid py-4">
     <div class="row">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header pb-0">
-                    <div class="d-flex align-items-center">
-                        <p class="mb-0 p-2">Informacion del Pacientes <span class="text-primary"></span></p>
-
-                    </div>
+        <div class="col-md-10 mx-auto"> <div class="card shadow-lg border-0 rounded-lg"> <div class="card-header bg-gradient-primary pb-0 pt-3"> <div class="d-flex align-items-center">
+                        <p class="mb-0 text-white fs-5 fw-bold p-2">Información del Paciente</p> </div>
                 </div>
                 <div class="card-body">
-                    <p class="text-uppercase text-sm p-2">Ingrese la Informacion</p>
-                    <div class="row">
+                    <h5 class="card-title text-center mb-4">Registro de Consulta Médica</h5> 
+                   <form action="../php/guardar_consulta23.php" id="miFormulario" method="post" enctype="multipart/form-data">
 
-                        <form action="../php/guardar_consulta23.php" id="miFormulario" method="post" enctype="multipart/form-data">
-
-
-                            <div class="d-flex flex-row justify-content-center">
-
-                                <div class="p-2 col-lg-5">
-
-                                    <label for="nombre" class="form-label">CODIGO DE PACIENTE</label>
-                                    <input type="txt" class="form-control" name="doc" id="doc" placeholder="introduce codigo" value="CP-" required onblur="buscar_datos();">
-                                    <input type="hidden" name="id" id="id">
+                        <div class="row mb-4">
+                            <div class="col-lg-6 mx-auto">
+                                <label for="doc" class="form-label">CÓDIGO DE PACIENTE</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                    <input type="text" class="form-control" name="doc" id="doc" placeholder="Introduce código" value="" required onblur="buscar_datos();">
                                 </div>
+                                <input type="hidden" name="id" id="id">
+                            </div>
+                        </div>
 
+                        <hr class="custom-hr">
+                        <p class="text-uppercase text-center text-section-title">Datos del Paciente</p>
 
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <input type="hidden" name="idpaciente" id="idpaciente">
+                                <label for="nombre" class="form-label">NOMBRE</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Introduce el nombre" readonly required>
+                                </div>
                             </div>
 
-
-                            <div class="d-flex flex-row justify-content-center">
-                                <div class="p-2 col-lg-5">
-                                    <input type="hidden" name="idpaciente" id="idpaciente">
-                                    <label for="nombre" class="form-label">NOMBRE</label>
-                                    <input type="txt" class="form-control" name="nombre" id="nombre" placeholder="introduce el nombre" readonly required>
+                            <div class="col-lg-6">
+                                <label for="apellidos" class="form-label">APELLIDOS</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                    <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Introduce el apellido" readonly required>
                                 </div>
-
-                                <div class="p-2 col-lg-5">
-                                    <label for="apellidos" class="form-label">Apellidos</label>
-                                    <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="introduce el apellido" readonly required>
-                                </div>
-
-
                             </div>
+                        </div>
 
-                            <div class="d-flex flex-row justify-content-center">
-                                <div class="p-2 col-lg-5">
-                                    <label for="fecha_nacimiento" class="form-label">FECHA DE NACIMIENTO</label>
+                        <div class="row mb-4">
+                            <div class="col-lg-6">
+                                <label for="fecha_nacimiento" class="form-label">FECHA DE NACIMIENTO</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                     <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" readonly required>
                                 </div>
-
-                                <div class="p-2 col-lg-5">
-                                    <label for="edad" class="form-label">DIP</label>
-                                    <input type="text" class="form-control" name="dip" id="dip" placeholder="introduce el dip" readonly required>
-
-                                </div>
-
-
                             </div>
 
-
-
-                            <hr class="horizontal dark">
-                            <p class="text-uppercase text-sm p-2 text-center">INFORMACION</p>
-
-
-                            <div class="d-flex flex-row justify-content-center bg-secondary-subtle">
-                                <div class="p-2 col-lg-5">
-                                    <div class="row">
-                                        <label for="edad" class="form-label">ANTECEDENTES PATOLOGICOS</label>
-                                    </div>
-
-                                    <div class="row">
-                                        <label>
-                                            <input type="checkbox" id="checkboxSi"> si
-                                        </label>
-
-                                        <div id="antecedentes1" class="hidden">
-                                            <label for="miInput">Cual es..?:</label>
-                                            <input type="text" class="form-control" id="miInput" name="antecedente">
-                                        </div>
-                                        <div id="antecedentes" class="hidden">
-                                            <label for="miInput">Tratamiento:</label>
-                                            <input type="text" class="form-control" id="miInput" name="antecedentes1">
-                                        </div>
-
-                                    </div>
-
-
-                                    <label>
-                                        <input type="checkbox" name="antecedentes2" value="NO"> No
-                                    </label>
+                            <div class="col-lg-6">
+                                <label for="dip" class="form-label">DIP</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                    <input type="text" class="form-control" name="dip" id="dip" placeholder="Introduce el DIP" readonly required>
                                 </div>
-
-
-                                <div class="p-2 col-lg-5">
-                                    <label for="sexo">GRUPO SANGUINEO</label>
-                                    <select class="form-control" aria-label=".form-select-lg example" id="grupo_sanguineo" name="grupo_sanguineo" required>
-                                        <option selected>Elije uno</option>
-                                        <option value="A">A</option>
-                                        <option value="B">B</option>
-                                        <option value="AB">AB</option>
-                                        <option value="O">O</option>
-                                        <option value="DESCONOCIDO">DESCONOCIDO</option>
-                                    </select>
-                                </div>
-
-
                             </div>
+                        </div>
 
+                        <hr class="custom-hr">
+                        <p class="text-uppercase text-center text-section-title">Exploración Médica</p>
 
-
-
-                            <div class="d-flex flex-row justify-content-center bg-secondary-subtle">
-                                <div class="p-2 col-lg-5">
-                                    <div class="row">
-                                        <label for="edad" class="form-label">ALERGIA MEDICAMENTOSA</label>
-                                    </div>
-
-                                    <div class="row">
-                                        <label>
-                                            <input type="checkbox" id="checkbox2Si"> si
-                                        </label>
-
-                                        <div id="alergia" class="hidden">
-                                            <label for="miInput">Medicamento:</label>
-                                            <input type="text" class="form-control" id="miInput" name="alergia1">
-                                        </div>
-
-                                    </div>
-
-
-                                    <label>
-                                        <input type="checkbox" name="alergia2" value="NO"> No
-                                    </label>
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <label for="peso" class="form-label">PESO</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="peso" id="peso" placeholder="Peso" required>
+                                    <span class="input-group-text"><i class="fas fa-weight-hanging"></i> kg</span>
                                 </div>
-
-
-                                <div class="p-2 col-lg-5">
-                                    <div class="row">
-                                        <label for="edad" class="form-label">VISITA MEDICA ULTIMOS 14 DIAS</label>
-                                    </div>
-
-                                    <div class="row">
-                                        <label>
-                                            <input type="checkbox" id="checkbox3Si" name="visita3" value="SI"> si
-                                        </label>
-
-                                        <div id="visita" class="hidden">
-                                            <label for="miInput">Diagnostico:</label>
-                                            <input type="text" class="form-control" id="miInput" name="visita1">
-                                        </div>
-
-
-                                        <div id="visita2" class="hidden">
-                                            <label for="miInput">tratamiento:</label>
-                                            <input type="text" class="form-control" id="miInput" name="visita2">
-                                        </div>
-                                    </div>
-
-
-                                    <label>
-                                        <input type="checkbox" name="visita3" value="NO"> No
-                                    </label>
-                                </div>
-
                             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <hr class="horizontal dark">
-                            <p class="text-uppercase text-sm p-2 text-center">EXPLORACION MEDICA</p>
-
-
-
-                            <div class="d-flex flex-row justify-content-center">
-
-                                <div class="p-2 col-lg-10">
-                                    <label for="hea" class="form-label">HEA:</label>
-                                    <textarea class="form-control" name="hea" id="hea" placeholder="HEA" required></textarea>
+                            <div class="col-lg-6">
+                                <label for="altura" class="form-label">ALTURA</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="altura" id="altura" placeholder="Altura" required>
+                                    <span class="input-group-text"><i class="fas fa-ruler-vertical"></i> cm</span>
                                 </div>
-
-
                             </div>
+                        </div>
 
-
-
-
-                            <div class="d-flex flex-row justify-content-center">
-
-
-
-
-                                <div class="p-2 col-lg-5">
-                                    <label for="edad" class="form-label">PESO</label>
-                                    <input type="text" class="form-control" name="peso" id="peso" placeholder="peso" required>
-                                </div>
-                                <div class="p-2 col-lg-5">
-                                    <label for="fecha" class="form-label">ALTARA</label>
-                                    <input type="text" class="form-control" name="altura" id="altura" placeholder="altura" required>
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <label for="tension_arterial" class="form-label">TENSIÓN ARTERIAL</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="tension_arterial" id="tension_arterial" placeholder="Ej: 120/80" required>
+                                    <span class="input-group-text"><i class="fas fa-heartbeat"></i> mmHg</span>
                                 </div>
                             </div>
 
-                            <div class="d-flex flex-row justify-content-center">
-                                <div class="p-2 col-lg-5">
-                                    <label for="edad" class="form-label">TENSION ARTERIAL</label>
-                                    <input type="text" class="form-control" name="tension_arterial" id="tension_arterial" placeholder="Tension arterial" required>
+                            <div class="col-lg-6">
+                                <label for="pulso" class="form-label">PULSO</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="pulso" id="pulso" placeholder="Latidos por minuto" required>
+                                    <span class="input-group-text"><i class="fas fa-pulse"></i> bpm</span>
                                 </div>
-
-                                <div class="p-2 col-lg-5">
-                                    <label for="tension" class="form-label">PULSO</label>
-                                    <input type="text" class="form-control" name="pulso" id="pulso" placeholder="pulso" required>
-                                </div>
-
-
                             </div>
+                        </div>
 
-                            <div class="d-flex flex-row justify-content-center">
-                                <div class="p-2 col-lg-5">
-                                    <label for="edad" class="form-label">TEMPERATURA</label>
-                                    <input type="text" class="form-control" name="temperatura" id="temperatura" placeholder="Tension arterial" required>
-                                </div>
-
-                                <div class="p-2 col-lg-5">
-                                    <label for="tension" class="form-label">P02</label>
-                                    <input type="text" class="form-control" name="peo" id="peo" placeholder="peo" required>
-                                </div>
-
-
-                            </div>
-
-
-                            <div class="d-flex flex-row justify-content-center">
-
-                                <div class="p-2 col-lg-10">
-                                    <label for="observacion" class="form-label">OBSERVACION DEL MEDICO</label>
-                                    <textarea class="form-control" name="observacion" id="observacion" placeholder="observacion" required></textarea>
-                                </div>
-
-                            </div>
-
-
-
-
-
-
-
-                            <hr class="horizontal dark">
-                            <p class="text-uppercase text-sm p-2 text-center">OTROS</p>
-
-
-
-
-
-
-                            <div class="d-flex flex-row justify-content-center bg-secondary-subtle">
-
-                                <div class="p-2 col-lg-5">
-                                    <label for="fecha" class="form-label">FECHA DE CONSULTA</label>
-                                    <input type="date" class="form-control" name="fecha" id="fecha" placeholder="fecha" required>
-                                </div>
-
-                                <div class="p-2 col-lg-5">
-                                    <label for="hora" class="form-label">HORA</label>
-                                    <input type="time" class="form-control" name="hora" id="hora" placeholder="hora" required>
-                                </div>
-
-
-
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-center bg-secondary-subtle">
-
-                                <div class="p-2 col-lg-5">
-
-                                    <label for="precio" class="form-label">PRECIO</label>
-                                    <input type="text" class="form-control" name="precio" id="precio" placeholder="precio" required>
-
-                                </div>
-                                <div class="p-2 col-lg-5">
-                                    <label for="fecha" class="form-label">MOTIVO</label>
-                                    <textarea class="form-control" name="motivo" id="motivo" placeholder="motivo" required></textarea>
+                        <div class="row mb-4">
+                            <div class="col-lg-6">
+                                <label for="temperatura" class="form-label">TEMPERATURA</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="temperatura" id="temperatura" placeholder="Temperatura" required>
+                                    <span class="input-group-text"><i class="fas fa-thermometer-half"></i> °C</span>
                                 </div>
                             </div>
 
-
-                            <!-- 
-
-    <div class="d-flex flex-row justify-content-center">
-        <div class="p-2 col-lg-5">
-            <label for="edad" class="form-label">ACTIVO</label>
-            <select class="form-control" aria-label=".form-select-lg example" id="activo" name="activo" required>
-                <option selected>Elije el sexo</option>
-                <option value="">M</option>
-                <option value="">F</option>
-            </select>
-        </div>
-        <div class="p-2 col-lg-5">
-            <label for="fecha" class="form-label">OBSERVACIONES</label>
-            <input type="text" class="form-control" name="observacion" id="observacion" placeholder="observacion" required>
-        </div>
-    </div>
-
-
-
-       -->
-
-
-
-                            <div class="row justify-content-center">
-                                <div class="modal-footer col-auto">
-
-                                    <a href="../ENFERMERA/consultas.php" class="btn btn-danger m-2 btn-sm">Cancelar</a>
-                                    <button type="submit" class="btn btn-primary btn-sm">GUARDAR</button>
-
+                            <div class="col-lg-6">
+                                <label for="peo" class="form-label">SpO2</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="peo" id="peo" placeholder="Saturación de oxígeno" required>
+                                    <span class="input-group-text"><i class="fas fa-lungs"></i> %</span>
                                 </div>
+                            </div>
+                        </div>
 
+                        <hr class="custom-hr">
+                        <p class="text-uppercase text-center text-section-title">Otros Datos de Consulta</p>
+
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <label for="fecha" class="form-label">FECHA DE CONSULTA</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                    <input type="date" class="form-control" name="fecha" id="fecha" required>
+                                </div>
                             </div>
 
+                            <div class="col-lg-6">
+                                <label for="hora" class="form-label">HORA</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <input type="time" class="form-control" name="hora" id="hora" required>
+                                </div>
+                            </div>
+                        </div>
 
-                        </form>
+                        <div class="row mb-4">
+                            <div class="col-lg-6">
+                                <label for="precio" class="form-label">PRECIO</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                    <input type="text" class="form-control" name="precio" id="precio" placeholder="Precio de la consulta" min="500" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="motivo" class="form-label">MOTIVO DE CONSULTA</label>
+                                <textarea class="form-control" name="motivo" id="motivo" placeholder="Describe el motivo de la consulta" rows="3" required></textarea>
+                            </div>
+                        </div>
 
-
-
-                    </div>
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-auto d-flex gap-3"> <a href="../ENFERMERA/consultas.php" class="btn btn-danger btn-sm btn-custom-cancel">
+                                    <i class="fas fa-times-circle me-2"></i> Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-sm btn-custom-save">
+                                    <i class="fas fa-save me-2"></i> GUARDAR CONSULTA
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
+<script type="text/javascript">
+    function buscar_datos() {
+        doc = $("#doc").val();
 
+        var parametros = {
+            "buscar": "1",
+            "doc": doc
+        };
 
-
-            <!-- coger los datos para editarlos en el modal -->
-            <script type="text/javascript">
-                function buscar_datos() {
-
-                    doc = $("#doc").val();
-
-                    var parametros = {
-                        "buscar": "1",
-                        "doc": doc
-
-                    };
-
-                    $.ajax({
-                        data: parametros,
-                        dataType: 'json',
-                        url: 'codigos.php',
-                        type: 'POST',
-
-                        error: function() {
-                            alert("no se encontro este codigo");
-                        },
-
-                        success: function(valores)
-
-                        {
-                            doc = $("#nombre").val(valores.nombre);
-                            doc = $("#apellidos").val(valores.apellidos);
-                            doc = $("#fecha_nacimiento").val(valores.fecha_nacimiento);
-                            doc = $("#dip").val(valores.dip);
-                            doc = $("#id").val(valores.id);
-
-
-                        }
-
-                    })
-
-
-
+        $.ajax({
+            data: parametros,
+            dataType: 'json',
+            url: 'codigos.php',
+            type: 'POST',
+            error: function() {
+                alert("No se encontró este código de paciente.");
+            },
+            success: function(valores) {
+                if (valores) {
+                    $("#nombre").val(valores.nombre);
+                    $("#apellidos").val(valores.apellidos);
+                    $("#fecha_nacimiento").val(valores.fecha_nacimiento);
+                    $("#dip").val(valores.dip);
+                    $("#id").val(valores.id);
+                } else {
+                    alert("No se encontraron datos para este código.");
+                    // Clear fields if no data is found
+                    $("#nombre").val('');
+                    $("#apellidos").val('');
+                    $("#fecha_nacimiento").val('');
+                    $("#dip").val('');
+                    $("#id").val('');
                 }
-            </script>
-
-
-
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const checkboxSi = document.getElementById('checkboxSi');
-                    const inputContainer = document.getElementById('antecedentes');
-
-
-                    function actualizarVisibilidadInput() {
-                        inputContainer.classList.toggle('hidden', !checkboxSi.checked);
-                    }
-
-                    checkboxSi.addEventListener('change', actualizarVisibilidadInput);
-
-                    // Llamar a la función al inicio para establecer la visibilidad inicial
-                    actualizarVisibilidadInput();
-                });
-            </script>
-
-
-
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const checkboxSi = document.getElementById('checkboxSi');
-                    const inputContainer = document.getElementById('antecedentes1');
-
-
-                    function actualizarVisibilidadInput() {
-                        inputContainer.classList.toggle('hidden', !checkboxSi.checked);
-                    }
-
-                    checkboxSi.addEventListener('change', actualizarVisibilidadInput);
-
-                    // Llamar a la función al inicio para establecer la visibilidad inicial
-                    actualizarVisibilidadInput();
-                });
-            </script>
-
-
-
-
-
-
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const checkboxSi = document.getElementById('checkbox2Si');
-                    const inputContainer = document.getElementById('alergia');
-
-                    function actualizarVisibilidadInput() {
-                        inputContainer.classList.toggle('hidden', !checkboxSi.checked);
-                    }
-
-                    checkboxSi.addEventListener('change', actualizarVisibilidadInput);
-
-                    // Llamar a la función al inicio para establecer la visibilidad inicial
-                    actualizarVisibilidadInput();
-                });
-            </script>
-
-
-
-
-
-
-
-
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const checkboxSi = document.getElementById('checkbox3Si');
-                    const inputContainer = document.getElementById('visita');
-
-                    function actualizarVisibilidadInput() {
-                        inputContainer.classList.toggle('hidden', !checkboxSi.checked);
-                    }
-
-                    checkboxSi.addEventListener('change', actualizarVisibilidadInput);
-
-                    // Llamar a la función al inicio para establecer la visibilidad inicial
-                    actualizarVisibilidadInput();
-                });
-            </script>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const checkboxSi = document.getElementById('checkbox3Si');
-                    const inputContainer = document.getElementById('visita2');
-
-                    function actualizarVisibilidadInput() {
-                        inputContainer.classList.toggle('hidden', !checkboxSi.checked);
-                    }
-
-                    checkboxSi.addEventListener('change', actualizarVisibilidadInput);
-
-                    // Llamar a la función al inicio para establecer la visibilidad inicial
-                    actualizarVisibilidadInput();
-                });
-            </script>
+            }
+        });
+    }
+</script>

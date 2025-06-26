@@ -223,20 +223,6 @@ $pacientes = $conn->query($sqlPacientes);
                         return `
              
 
-                       <button class="btn btn-sm btn-primary ver-consulta" 
-        data-id="${data.id}"
-        data-paciente_id="${data.paciente_id}"
-        data-cod="${data.paciente_cod}"
-        data-peso="${data.peso}"
-        data-altura="${data.altura}"
-        data-tension="${data.tension_arterial}"
-        data-pulso="${data.pulso}"
-        data-temp="${data.temperatura}"
-        data-po2="${data.PO2}"
-        data-fecha="${data.fecha}"
-        data-hora="${data.hora}"
-        data-precio="${data.precio}"
-      >Ver</button>
                         <a href="../DOCTOR/analisis.php?id_consulta=${data.id}&codigo=${data.paciente_cod}&id_paciente=${data.paciente_id}&fecha=${data.fecha}" class="btn btn-sm btn-warning">PRUEBAS</a>
                         <a href="../DOCTOR/registrar_receta.php?id=${data.id}&codigo=${data.paciente_cod}&paciente_id=${data.paciente_id}&fecha=${data.fecha}" class="btn btn-sm btn-success">RECETAS</a>
 <button type="button" class="btn btn-primary ver-consulta" data-bs-toggle="modal" data-bs-target="#historialModal"
@@ -273,6 +259,13 @@ data-id="${data.id}"
 
         $(document).on('click', '.ver-consulta', function () {
             const id = $(this).data('id');
+            const codigo = $(this).data('paciente_cod');
+             const fecha = $(this).data('fecha');
+
+            $('#historialConsultaId').val(id);
+
+            $('#codigo').val(codigo);
+            $('#fecha').val(fecha);
 
             // Datos básicos desde atributos del botón
             $('#verCod').text($(this).data('cod'));
@@ -318,120 +311,199 @@ data-id="${data.id}"
 
 
 
-<!-- Modal Responsive -->
+
 <div class="modal fade" id="historialModal" tabindex="-1" aria-labelledby="historialModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-lg">
-    <div class="modal-content shadow rounded-4">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="historialModalLabel">Formulario de Historial Médico</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-
-
-<!-- Bloque de datos del paciente/consulta -->
-<div class="bg-light rounded shadow-sm p-4 mb-4 border border-2 border-primary-subtle">
-  <h5 class="text-center text-primary mb-4">
-    <i class="bi bi-person-circle me-2"></i>Datos del Paciente / Consulta
-  </h5>
-
-  <div class="row g-3 text-secondary small">
-    <div class="col-md-4"><strong><i class="bi bi-upc-scan me-1"></i> Código:</strong> <span id="verCod"></span></div>
-    <div class="col-md-4"><strong><i class="bi bi-speedometer2 me-1"></i> Peso:</strong> <span id="verPeso"></span> kg</div>
-    <div class="col-md-4"><strong><i class="bi bi-rulers me-1"></i> Altura:</strong> <span id="verAltura"></span> cm</div>
-    <div class="col-md-4"><strong><i class="bi bi-heart-pulse me-1"></i> Tensión:</strong> <span id="verTension"></span></div>
-    <div class="col-md-4"><strong><i class="bi bi-activity me-1"></i> Pulso:</strong> <span id="verPulso"></span> bpm</div>
-    <div class="col-md-4"><strong><i class="bi bi-thermometer me-1"></i> Temperatura:</strong> <span id="verTemp"></span> °C</div>
-    <div class="col-md-4"><strong><i class="bi bi-droplet-half me-1"></i> PO2:</strong> <span id="verPo2"></span></div>
-    <div class="col-md-4"><strong><i class="bi bi-calendar me-1"></i> Fecha:</strong> <span id="verFecha"></span></div>
-    <div class="col-md-4"><strong><i class="bi bi-clock me-1"></i> Hora:</strong> <span id="verHora"></span></div>
-    <div class="col-md-4"><strong><i class="bi bi-currency-dollar me-1"></i> Precio:</strong> <span id="verPrecio"></span> Fcfa</div>
-  </div>
-
-  <!-- Línea separadora -->
-  <hr class="mt-4 border border-primary-subtle">
-</div>
-
-
-      <form id="formHistorial">
-        <div class="modal-body p-4">
-          <!-- Switch: Antecedentes Patológicos -->
-          <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" id="switchAntecedentes">
-            <label class="form-check-label" for="switchAntecedentes">¿Antecedentes patológicos?</label>
-          </div>
-          <div id="antecedentesFields" class="row g-3 mb-3 d-none">
-            <div class="col-12 col-md-6">
-              <label for="cualAntecedente" class="form-label">¿Cuál es?</label>
-              <input type="text" class="form-control" id="cualAntecedente" name="cual_antecedente">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-3">
+            <div class="modal-header bg-primary text-white p-4 rounded-top-3">
+                <h5 class="modal-title fs-5" id="historialModalLabel">
+                    <i class="bi bi-journal-medical me-2"></i> Formulario de Historial Médico
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            <div class="col-12 col-md-6">
-              <label for="tratamientoAntecedente" class="form-label">Tratamiento</label>
-              <input type="text" class="form-control" id="tratamientoAntecedente" name="tratamiento_antecedente">
+
+            <div class="modal-body p-4">
+                <div class="bg-light rounded p-4 mb-4 border border-2 border-primary-subtle shadow-sm">
+                    <h6 class="text-primary fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-person-badge me-2 fs-5"></i> Datos del Paciente / Consulta
+                    </h6>
+
+                    <div class="row g-3 text-secondary">
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Código Paciente</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-upc-scan me-2"></i><span id="verCod"></span></span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Peso</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-speedometer2 me-2"></i><span id="verPeso"></span> kg</span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Altura</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-rulers me-2"></i><span id="verAltura"></span> cm</span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Tensión</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-heart-pulse me-2"></i><span id="verTension"></span> mmHg</span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Pulso</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-activity me-2"></i><span id="verPulso"></span> bpm</span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Temperatura</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-thermometer-half me-2"></i><span id="verTemp"></span> °C</span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">SpO2</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-lungs me-2"></i><span id="verPo2"></span> %</span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Fecha</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-calendar-event me-2"></i><span id="verFecha"></span></span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Hora</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-clock me-2"></i><span id="verHora"></span></span>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <small class="d-block text-muted">Precio</small>
+                            <span class="d-block fw-bold text-dark"><i class="bi bi-currency-dollar me-2"></i><span id="verPrecio"></span> Fcfa</span>
+                        </div>
+                    </div>
+                </div>
+
+               <form action="../php/actualizar_historial.php"  method="post" enctype="multipart/form-data">
+                    <input type="text" id="historialConsultaId" name="consulta_id">
+                     <input type="text" id="codigo" name="codigo">
+                       <input type="date" id="fecha" name="fecha">
+
+                    
+
+
+
+                    <h6 class="text-secondary fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-clipboard-pulse me-2 fs-5"></i> Detalles del Historial
+                    </h6>
+
+                    
+
+                    <div class="card card-body bg-light-subtle mb-3">
+                        <div class="form-check form-switch d-flex align-items-center">
+                            <input class="form-check-input flex-shrink-0" type="checkbox" id="switchAntecedentes">
+                            <label class="form-check-label ms-3 fw-semibold text-dark" for="switchAntecedentes">
+                                <i class="bi bi-virus me-2 text-danger"></i> ¿Antecedentes patológicos?
+                            </label>
+                        </div>
+
+
+
+                        <div id="antecedentesFields" class="row g-3 mt-2 d-none p-3 border rounded">
+                            <div class="col-12 col-md-6">
+                                <label for="cualAntecedente" class="form-label text-muted small">¿Cuál es?</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-question-lg"></i></span>
+                                    <input type="text" class="form-control" id="cualAntecedente" name="cual_antecedente" placeholder="Ej: Diabetes, Hipertensión">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="tratamientoAntecedente" class="form-label text-muted small">Tratamiento</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-bandages"></i></span>
+                                    <input type="text" class="form-control" id="tratamientoAntecedente" name="tratamiento_antecedente" placeholder="Ej: Insulina, Diuréticos">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-body bg-light-subtle mb-3">
+                        <div class="form-check form-switch d-flex align-items-center">
+                            <input class="form-check-input flex-shrink-0" type="checkbox" id="switchAlergia">
+                            <label class="form-check-label ms-3 fw-semibold text-dark" for="switchAlergia">
+                                <i class="bi bi-exclamation-triangle-fill me-2 text-warning"></i> ¿Alergia a medicamentos?
+                            </label>
+                        </div>
+                        <div id="alergiaFields" class="mt-2 d-none p-3 border rounded">
+                            <label for="medicamentoAlergia" class="form-label text-muted small">¿A qué medicamento?</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-pill"></i></span>
+                                <input type="text" class="form-control" id="medicamentoAlergia" name="medicamento_alergia" placeholder="Ej: Penicilina, Ibuprofeno">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-body bg-light-subtle mb-3">
+                        <div class="form-check form-switch d-flex align-items-center">
+                            <input class="form-check-input flex-shrink-0" type="checkbox" id="switchVisita">
+                            <label class="form-check-label ms-3 fw-semibold text-dark" for="switchVisita">
+                                <i class="bi bi-hospital-fill me-2 text-info"></i> ¿Visita médica en los últimos 14 días?
+                            </label>
+                        </div>
+                        <div id="visitaFields" class="row g-3 mt-2 d-none p-3 border rounded">
+                            <div class="col-12 col-md-6">
+                                <label for="diagnosticoVisita" class="form-label text-muted small">Diagnóstico</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-clipboard2-pulse"></i></span>
+                                    <input type="text" class="form-control" id="diagnosticoVisita" name="diagnostico_visita" placeholder="Ej: Gripe, infección">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="tratamientoVisita" class="form-label text-muted small">Tratamiento</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-capsule"></i></span>
+                                    <input type="text" class="form-control" id="tratamientoVisita" name="tratamiento_visita" placeholder="Ej: Antibióticos, reposo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="grupoSanguineo" class="form-label fw-semibold text-dark d-flex align-items-center">
+                            <i class="bi bi-droplet me-2 fs-5 text-primary"></i> Grupo Sanguíneo
+                        </label>
+                        <select class="form-select" id="grupoSanguineo" name="grupo_sanguineo" required>
+                            <option value="" selected disabled>Seleccione un grupo</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="hea" class="form-label fw-semibold text-dark d-flex align-items-center">
+                            <i class="bi bi-file-earmark-medical me-2 fs-5 text-primary"></i> HEA (Historia de la Enfermedad Actual)
+                        </label>
+                        <textarea class="form-control" id="hea" name="hea" rows="3" placeholder="Describa la historia de la enfermedad actual del paciente..." style="resize: none;" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="observaciones" class="form-label fw-semibold text-dark d-flex align-items-center">
+                            <i class="bi bi-chat-dots me-2 fs-5 text-primary"></i> Observaciones del médico
+                        </label>
+                        <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Añade cualquier observación clínica relevante..." style="resize: none;" required></textarea>
+                    </div>
+
+                    <div class="modal-footer bg-light p-3 rounded-bottom-3">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" >
+                    <i class="bi bi-save me-1"></i> Guardar Historial
+                </button>
             </div>
-          </div>
-
-          <!-- Switch: Alergia Medicamentosa -->
-          <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" id="switchAlergia">
-            <label class="form-check-label" for="switchAlergia">¿Alergia a medicamentos?</label>
-          </div>
-          <div id="alergiaFields" class="mb-3 d-none">
-            <label for="medicamentoAlergia" class="form-label">¿A qué medicamento?</label>
-            <input type="text" class="form-control" id="medicamentoAlergia" name="medicamento_alergia">
-          </div>
-
-          <!-- Switch: Visita médica reciente -->
-          <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" id="switchVisita">
-            <label class="form-check-label" for="switchVisita">¿Visita médica en los últimos 14 días?</label>
-          </div>
-          <div id="visitaFields" class="row g-3 mb-3 d-none">
-            <div class="col-12 col-md-6">
-              <label for="diagnosticoVisita" class="form-label">Diagnóstico</label>
-              <input type="text" class="form-control" id="diagnosticoVisita" name="diagnostico_visita">
+                </form>
             </div>
-            <div class="col-12 col-md-6">
-              <label for="tratamientoVisita" class="form-label">Tratamiento</label>
-              <input type="text" class="form-control" id="tratamientoVisita" name="tratamiento_visita">
-            </div>
-          </div>
-
-          <!-- Grupo Sanguíneo -->
-          <div class="mb-3">
-            <label for="grupoSanguineo" class="form-label">Grupo Sanguíneo</label>
-            <select class="form-select" id="grupoSanguineo" name="grupo_sanguineo">
-              <option selected disabled>Seleccione un grupo</option>
-              <option>A+</option>
-              <option>A-</option>
-              <option>B+</option>
-              <option>B-</option>
-              <option>AB+</option>
-              <option>AB-</option>
-              <option>O+</option>
-              <option>O-</option>
-            </select>
-          </div>
-
-          <!-- HEA -->
-          <div class="mb-3">
-            <label for="hea" class="form-label">HEA (Historia de la Enfermedad Actual)</label>
-            <textarea class="form-control" id="hea" name="hea" rows="3" placeholder="Describa la enfermedad actual..."></textarea>
-          </div>
-
-          <!-- Observaciones -->
-          <div class="mb-3">
-            <label for="observaciones" class="form-label">Observaciones del médico</label>
-            <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Observaciones clínicas..."></textarea>
-          </div>
+            
         </div>
-        <div class="modal-footer bg-light">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
+
+
+
 
 
 
