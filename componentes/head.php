@@ -213,5 +213,19 @@ $numero_pacientesf=mysqli_num_rows($resultado_pacientesf);
 
 
 
+<style>
+  .modal-backdrop.show {
+    z-index: 9998 !important;
+  }
+
+  .modal.show {
+    z-index: 9999 !important;
+  }
+
+  .modal-dialog {
+    z-index: 10000 !important;
+  }
+</style>
+
 </head>
 
