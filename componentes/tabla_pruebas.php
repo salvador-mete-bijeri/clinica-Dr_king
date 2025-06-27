@@ -8,33 +8,30 @@
     pacientes.nombre,
     pacientes.codigo,
     prueba.fecha,
-    GROUP_CONCAT(tipo_prueba.nombre_prueba SEPARATOR '<br>') AS pruebas,
-    GROUP_CONCAT(tipo_prueba.precio SEPARATOR '<br>') AS precios,
+    GROUP_CONCAT(DISTINCT tipo_prueba.nombre_prueba ORDER BY tipo_prueba.nombre_prueba SEPARATOR '<br>') AS pruebas,
+    GROUP_CONCAT(DISTINCT tipo_prueba.precio ORDER BY tipo_prueba.nombre_prueba SEPARATOR '<br>') AS precios,
     MAX(prueba.id_prueba) AS id_prueba,
-    MAX(prueba.estado) AS estado,
-
     
-
-    -- Estado: 1 solo si todas las pruebas tienen estado = 1
+    -- Estado: 1 solo si todas las pruebas tienen estado = 1, 0 en caso contrario
     CASE 
-        WHEN SUM(prueba.estado) = COUNT(*) THEN 1
+        WHEN SUM(CASE WHEN prueba.estado = 1 THEN 1 ELSE 0 END) = COUNT(*) THEN 1
         ELSE 0
     END AS estado,
-   
 
     -- Verifica si todas las pruebas están pagadas
     CASE 
-        WHEN SUM(prueba.pagado) = COUNT(*) THEN 1
+        WHEN SUM(CASE WHEN prueba.pagado = 1 THEN 1 ELSE 0 END) = COUNT(*) THEN 1
         ELSE 0
     END AS pagado
 
 FROM prueba
 LEFT JOIN pacientes ON prueba.paciente = pacientes.id
 LEFT JOIN tipo_prueba ON prueba.id_tipo_prueba = tipo_prueba.id
-LEFT JOIN consultas ON consultas.paciente_id = pacientes.id
+-- Eliminé el LEFT JOIN consultas para evitar duplicados innecesarios
+-- Si necesitas datos de consultas, agrégalo con un JOIN específico y agrupa correctamente
 
-GROUP BY pacientes.codigo, prueba.fecha
-ORDER BY prueba.fecha DESC;";
+GROUP BY pacientes.codigo, prueba.fecha, pacientes.nombre
+ORDER BY prueba.fecha DESC";
 
     $pacientes = $conn->query($sqlPacientes);
 
@@ -158,40 +155,35 @@ ORDER BY prueba.fecha DESC;";
                                  <th>FECHA</th>
                                  <th>Acciones</th>
                              </thead>
-                               <tbody>
-                                 <?php while ($row_pacientes = $pacientes->fetch_assoc()) { ?>
-                                     <tr>
-                                         <?php
-                                             $estado_html = ($row_pacientes['estado'] == 0)
-                                            ? "<span class='badge bg-danger'>PENDIENTE...</span>"
-                                            : "<span class='badge bg-success'>RESULTADOS...</span>";
+                              <tbody>
+<?php while ($row_pacientes = $pacientes->fetch_assoc()) { 
+    // Badges para estado y pagado
+    $estado_html = ($row_pacientes['estado'] == 0)
+        ? "<span class='badge bg-danger'>PENDIENTE...</span>"
+        : "<span class='badge bg-success'>RESULTADOS...</span>";
 
-                                            $pagado_html = ($row_pacientes['pagado'] == 0)
-                                                ? "<span class='badge bg-danger'>PENDIENTE...</span>"
-                                                : "<span class='badge bg-success'>PAGADA...</span>";
-                                            ?>
-
-                                         <td><?= $row_pacientes['id_prueba']; ?></td>
-                                         <td><?= $row_pacientes['codigo']; ?></td>
-                                         <td><?= $row_pacientes['nombre']; ?></td>
-                                         <td><?= $row_pacientes['pruebas']; ?></td> <!-- Pruebas agrupadas -->
-                                        
-                                         
-                                         <td><?= $estado_html; ?></td>
-                                         <td><?= $row_pacientes['fecha']; ?></td>
-
-                                         <td>
-                                             
-
-                                             <a href="../reportes/pruebas_laboratorio_por_dia.php?codigo=<?= $row_pacientes['codigo']; ?>&fecha=<?= $row_pacientes['fecha']; ?>"
-                                                 class="btn btn-sm btn-warning"
-                                                 target="_blank">
-                                                 <i class="fa fa-print"></i>
-                                             </a>
-                                         </td>
-                                     </tr>
-                                 <?php } ?>
-                             </tbody>
+    $pagado_html = ($row_pacientes['pagado'] == 0)
+        ? "<span class='badge bg-danger'>PENDIENTE...</span>"
+        : "<span class='badge bg-success'>PAGADA...</span>";
+?>
+    <tr>
+        <td><?= htmlspecialchars($row_pacientes['id_prueba']); ?></td>
+        <td><?= htmlspecialchars($row_pacientes['codigo']); ?></td>
+        <td><?= htmlspecialchars($row_pacientes['nombre']); ?></td>
+        <td style="white-space: normal;"><?= $row_pacientes['pruebas']; ?></td> <!-- Pruebas con <br> -->
+        <td><?= $estado_html; ?></td>
+        <td><?= htmlspecialchars($row_pacientes['fecha']); ?></td>
+        <td>
+            <a href="../reportes/pruebas_laboratorio_por_dia.php?codigo=<?= urlencode($row_pacientes['codigo']); ?>&fecha=<?= urlencode($row_pacientes['fecha']); ?>"
+                class="btn btn-sm btn-warning"
+                target="_blank"
+                title="Imprimir reporte">
+                <i class="fa fa-print"></i>
+            </a>
+        </td>
+    </tr>
+<?php } ?>
+</tbody>
                              <tfoot>
                                  <tr>
                                      <th>ID</th>
@@ -210,5 +202,21 @@ ORDER BY prueba.fecha DESC;";
          </div>
      </div>
      <script>
-         $('#example').DataTable();
+        
+
+         $(document).ready(function() {
+  $('#example').DataTable({
+    // Opciones extras (opcional)
+    language: {
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+      paginate: {
+        previous: "Anterior",
+        next: "Siguiente"
+      }
+    }
+  });
+});
+
      </script>
