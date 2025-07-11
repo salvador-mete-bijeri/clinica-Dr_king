@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         echo "</tbody></table>";
-        echo "<h5 class='text-end P-3'>💰 Total: <strong >" . number_format($total, 2) . " FCFA</strong></h5>";
+        echo "<h5 class='text-end P-3'> Total: <strong >" . number_format($total, 2) . " FCFA</strong></h5>";
 
         // Botón PAGAR AHORA
         echo "

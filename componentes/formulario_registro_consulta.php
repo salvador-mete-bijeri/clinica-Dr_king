@@ -101,7 +101,7 @@ if ($id_numero > 0) {
                                 <label for="tension_arterial" class="form-label">TENSIÓN ARTERIAL</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="tension_arterial" id="tension_arterial" placeholder="Ej: 120/80" required>
-                                    <span class="input-group-text"><i class="fas fa-heartbeat"></i> mmHg</span>
+                                    <span class="input-group-text"><i class="fas fa-heartbeat"></i> S/D</span>
                                 </div>
                             </div>
 
@@ -157,7 +157,7 @@ if ($id_numero > 0) {
                             <div class="col-lg-6">
                                 <label for="precio" class="form-label">PRECIO</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-xaf-sign"></i></span>
                                     <input type="text" class="form-control" name="precio" id="precio" placeholder="Precio de la consulta" min="500" required>
                                 </div>
                             </div>

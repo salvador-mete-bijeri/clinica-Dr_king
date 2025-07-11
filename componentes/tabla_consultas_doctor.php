@@ -3,7 +3,9 @@
 
 require '../conexion/conexion.php';
 
-$sqlPacientes = "SELECT * FROM consultas";
+$sqlPacientes = "SELECT `consultas`.*, `pacientes`.*
+FROM `consultas` 
+	LEFT JOIN `pacientes` ON `consultas`.`paciente_id` = `pacientes`.`id`;";
 
 $pacientes = $conn->query($sqlPacientes);
 
@@ -143,6 +145,7 @@ $pacientes = $conn->query($sqlPacientes);
 
             <table id="example" class="table table-striped" style="width:100%">
               <thead>
+                 <th>NOMBRE</th>
                 <th>CODIGO</th>
                 <th>PESO</th>
                 <th>ALTURA</th>
@@ -188,9 +191,13 @@ $pacientes = $conn->query($sqlPacientes);
           type: 'GET'
         },
         columns: [{
+          data: 'nombre'
+           },
+          {
             data: 'paciente_cod'
           },
-          {
+
+           {
             data: 'peso'
           },
           {
@@ -264,6 +271,8 @@ data-id="${data.id}"
 
             // ahora también funciona
   $('#historialConsultaId').val(id);
+
+  
   
   // Mostrar valores en el modal
   $('#verCod').text(codigo);
@@ -372,10 +381,13 @@ data-id="${data.id}"
             </div>
           </div>
 
+
+
+
           <form action="../php/actualizar_historial.php" method="post" enctype="multipart/form-data">
-            <input type="text" id="historialConsultaId" name="consulta_id">
-            <input type="text" id="modalCodigo" name="codigo_pac">
-<input type="text" id="modalFecha" name="fecha">
+            <input type="hidden" id="historialConsultaId" name="consulta_id">
+            <input type="hidden" id="modalCodigo" name="codigo_pac">
+<input type="hidden" id="modalFecha" name="fecha">
 
 
 

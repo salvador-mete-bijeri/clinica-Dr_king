@@ -19,7 +19,9 @@ if (empty($search)) {
 }
 
 // Buscar por paciente_cod ignorando espacios y mayúsculas
-$sql = "SELECT * FROM consultas WHERE REPLACE(LOWER(paciente_cod), ' ', '') LIKE ?";
+$sql = " SELECT `consultas`.*, `pacientes`.*
+FROM `consultas` 
+	LEFT JOIN `pacientes` ON `consultas`.`paciente_id` = `pacientes`.`id`  WHERE REPLACE(LOWER(paciente_cod), ' ', '') LIKE ?";
 $stmt = $conn->prepare($sql);
 $like = '%' . str_replace(' ', '', $search) . '%';
 $stmt->bind_param("s", $like);

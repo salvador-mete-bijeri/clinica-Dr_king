@@ -37,7 +37,7 @@ $pacientes = $conn->query($sqlPacientes);
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Authors table</h6>
+                    <h6>TABLA DE LABORATORIO</h6>
 
                 </div>
 

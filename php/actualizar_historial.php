@@ -1,6 +1,7 @@
 <?php
 require '../conexion/conexion.php';
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Capturar y limpiar datos del formulario
     $consulta_id = mysqli_real_escape_string($conn, $_POST['consulta_id']);
@@ -37,6 +38,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error en la actualización de observaciones: " . mysqli_error($conn));
     }
 
+
+    $consulta="SELECT * from consultas WHERE id=$consulta_id LIMIT 1";
+    $resultado=mysqli_query($conn, $consulta);
+    $fila=mysqli_fetch_assoc($resultado);
+
+    $codigo= $fila['paciente_cod'];
+    $fecha=$fila['fecha'];
+
+
+
     // 2. Actualizar la tabla detalles_consultas
     $updateDetalle = "UPDATE detalles_consultas SET 
         antecedentes_patologicos = ?, 
@@ -59,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $visita_medica,
             $diagnostico_visita,
             $tratamiento_visita,
-            $codigo_pac,
-            $fecha_actual,
+            $codigo,
+            $fecha,
             $cual_antecedente,
             $consulta_id
         );

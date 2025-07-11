@@ -327,7 +327,7 @@ $pacientes = $conn->query($sqlPacientes);
 
                     <div class="modal-body">
                         <input type="hidden" name="codigo" id="codigoInput">
-                        <input type="date" name="fecha" id="fechaInput">
+                        <input type="hidden" name="fecha" id="fechaInput">
 
 
                         <div id="listaPruebas"></div>
